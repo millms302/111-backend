@@ -1,0 +1,50 @@
+SQL: Structured Query Language
+    -allows you to create, read, update and delete data with, simple, declarative commands.
+    -works with many database engines: SQLite, MySQL, ProsgreSQL, and SQL Server.
+    -you describe WHAT you want, not HOW to get it.
+    -supports, joins filters, aggregations, and subqueries for advanced data manipulation.
+    -widely used in APIs, web apps, and server side logic.
+    -powers dashboards, reporting tools, and scalable enterprise systems.
+
+SQLite: database engine
+    -uses SQL
+    -lightweight, file-based database. No server needed.
+    -used in Mobile Apps, prototypes, small projects.
+
+MySQL: database engine
+    -uses SQL
+    -popular open-source client-server databases. Fast and widely supported.
+    -used in web applications, CMS platforms (ex-wordpress).
+
+PostgreSQL: database engine
+    -uses SQL
+    -advances, open-source database with powerful features.
+    -used in APIs, enterprise systems, and data analytics.
+
+CRUD Operations in SQL:
+    -Operations:
+        -Create: INSERT INTO: Adds New Records
+        -Read: SELECT: Retrieves data
+        -Update: UPDATE: Modifies existing records
+        -Delete: REmoves records
+
+Real-World Use Cases: Common use cases for relational databases.
+    -Login systems and user authentication.
+    -inventory and product management.
+    -analytics dashboards and reports.
+    -APIs that serve structured data.
+
+--------CODE NOTES----------
+Create venv: py/ -m venv venv
+Activate the venv: venv\Scripts\activate
+Install Flask: pip install Flask
+    
+TO CREATE A TABLE USING SQLite:
+cursor.execute("""
+CREATE TABLE IF NOT EXIST users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+""")
