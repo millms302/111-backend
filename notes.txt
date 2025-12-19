@@ -34,6 +34,8 @@ Real-World Use Cases: Common use cases for relational databases.
     -analytics dashboards and reports.
     -APIs that serve structured data.
 
+** As a resource, usee Paulcoding.com **
+
 --------CODE NOTES----------
 Create venv: py/ -m venv venv
 Activate the venv: venv\Scripts\activate
