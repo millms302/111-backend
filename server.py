@@ -165,7 +165,95 @@ def create_expense():
     }), 201
 #SESSION 3
 
-# Frontend 
+@app.get("/api/expenses")
+def get_expenses():
+    conn=sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row # Allows columns values to be retrieved by name, row ["username"]
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, title, description FROM expenses")
+    rows = cursor.fetchall() # retrieves all rows from the result of the query.
+    print(rows)
+    conn.close()
+
+    expenses=[]
+    for row in rows:
+        expense= {"id": row["id"], "title": row["title"], "description": row["description"]}
+        expenses.append(expense)
+
+    return jsonify({
+        "success": True,
+        "message":"Expenses Retrieved Successfully",
+        "data": expenses
+        }), 200
+
+@app.get("/api/expenses/<int:expense_id>")
+def get_expense_by_id(expense_id):
+    conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM expenses WHERE id=?", (expense_id,))
+    row = cursor.fetchone()
+    # Validate if user exists
+    cursor.execute("SELECT * FROM users WHERE id=?", (expense_id,))
+    if not row: #retrieves a single row from the result.
+        return jsonify({
+            "success": False,
+            "message": "Expense not found"
+        }), 404
+    conn.close()
+
+    return jsonify({
+        "success": True,
+        "message": "Expense retrieved successfully",
+        "data": dict(row)
+    }), 200
+
+
+@app.put("/api/expenses/<int:expense_id>")
+def update_expense(expense_id):
+    data = request.get_json()
+    title = data.get("title")
+    description = data.get("description")
+    amount = data.get("amount")
+    date= data.get("date")
+    category = data.get("category")
+    user_id = data.get("user_id")
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE expenses SET title=?, description=?, amount=?, date=?, category=?,  user_id=? WHERE id=?", (title, description, amount, date, category, user_id, expense_id))
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        "success": True,
+        "message": "expense updated successfully"
+    }), 200
+
+@app.delete("/api/expenses/<int:expense_id>")
+def delete_expense(expense_id):
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    # Validate if user exists
+    cursor.execute("SELECT * FROM expenses WHERE id=?", (expense_id,))
+    if not cursor.fetchone(): #retrieves a single row from the result.
+        return jsonify({
+            "success": False,
+            "message": "Expense not found"
+        }), 404
+    cursor.execute("DELETE FROM expenses WHERE id=?", (expense_id,))
+    conn.commit()
+    conn.close()
+
+
+    return jsonify({
+        "success": True,
+        "message": "Expense Deleted Successfully"
+    }), 200
+   
+# Frontend
+
 @app.get("/")
 def home():
     return render_template("home.html")
