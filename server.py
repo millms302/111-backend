@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import sqlite3
 from datetime import date
 
@@ -163,7 +163,39 @@ def create_expense():
         "success": True,
         "message": "Expense created successfully."
     }), 201
+#SESSION 3
+
+# Frontend 
+@app.get("/")
+def home():
+    return render_template("home.html")
+
+
+@app.get("/about") 
+def about():
+    my_name = "Mike"
+    hobbies = ["Guitar", "Skateboarding", "Gaming", "Lego", "Staring Contests"]
+    return render_template("about.html", name=my_name, hobbies=hobbies)
+
+@app.get("/contact")
+def contact():
+    contact_info = {
+        "Email": "crazymike@cmst.com",
+        "Phone": "314-867-5309",
+        "Address": "123 Music Street, Saint Louis, MO 63125"
+    }
+    
+    return render_template("contact.html", contact_info=contact_info)
+
+@app.get("/login")
+def login():
+    return render_template("login.html")
+
+
+
+
+
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    app.run(debug=True, )

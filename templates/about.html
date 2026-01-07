@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-success">About Us</h1>
+<h2>Hello I am {{name}}</h2>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, alias quam id provident doloremque quaerat quidem
+    dicta, dolor optio, dolorum commodi! Vero in excepturi quae iste alias, fugiat quo necessitatibus.</p>
+
+<h2>Hobbies List</h2>
+
+<ul>
+{% for hobbie in hobbies %}
+    <li>{{hobbie}}</li>
+{% endfor %}
+</ul>
+
+{% endblock content %}
