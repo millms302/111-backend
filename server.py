@@ -262,7 +262,7 @@ def home():
 @app.get("/about") 
 def about():
     my_name = "Mike"
-    hobbies = ["Guitar", "Skateboarding", "Gaming", "Lego", "Staring Contests"]
+    hobbies = ["Guitar", "Skateboarding", "Gaming", "Punk Rock", "Staring Contests"]
     return render_template("about.html", name=my_name, hobbies=hobbies)
 
 @app.get("/contact")
